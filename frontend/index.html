@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto do Espaço no Meu Aniversário | NASA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <header>
+            <h1>🌟 Qual foto o espaço tinha no dia do seu aniversário?</h1>
+            <p class="subtitulo">Descubra a imagem que a NASA escolheu para o dia em que você nasceu!</p>
+        </header>
+
+        <main>
+            <section class="card busca">
+                <label for="data-aniversario" class="label-grande">📅 Quando você nasceu?</label>
+                <p class="dica">(Escolha o dia, mês e ano do seu aniversário)</p>
+                <input 
+                    type="date" 
+                    id="data-aniversario" 
+                    min="1995-06-16" 
+                    max=""
+                    aria-label="Data do seu aniversário"
+                >
+                <button id="btn-buscar" type="button">
+                    Ver foto do espaço
+                </button>
+            </section>
+
+            <section id="resultado" class="card resultado" aria-live="polite" hidden>
+                <div id="loading" class="loading" hidden>
+                    <div class="planeta"></div>
+                    <p>Buscando sua foto no espaço...</p>
+                </div>
+
+                <div id="conteudo" hidden>
+                    <h2 id="titulo-foto"></h2>
+                    <p class="data-exibicao" id="data-exibicao"></p>
+                    
+                    <div id="midia-container">
+                        <img id="imagem-apod" alt="" hidden>
+                        <iframe id="video-apod" hidden></iframe>
+                    </div>
+
+                    <div class="descricao-box">
+                        <h3>📖 O que a NASA diz sobre essa imagem:</h3>
+                        <p id="descricao" class="texto-descricao"></p>
+                        <p id="copyright" class="copyright"></p>
+                    </div>
+                </div>
+
+                <div id="erro" class="erro" hidden>
+                    <span class="icone-erro">⚠️</span>
+                    <p id="mensagem-erro"></p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Imagens e textos: NASA • Astronomy Picture of the Day</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
