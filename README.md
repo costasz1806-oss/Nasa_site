@@ -73,6 +73,24 @@ Plataformas/
 
 ---
 
+## ☁️ Hospedagem gratuita (Render)
+
+1. Acesse [render.com](https://render.com) e crie conta (conecte com GitHub)
+2. **New** → **Web Service**
+3. Conecte o repositório do GitHub
+4. Configure:
+   - **Name:** `anivernasa`
+   - **Build Command:** `pip install -r backend/requirements.txt`
+   - **Start Command:** `cd backend && gunicorn app:app --bind 0.0.0.0:$PORT`
+5. Em **Environment** → **Add Environment Variable:**
+   - Key: `NASA_API_KEY`
+   - Value: (sua chave da NASA)
+6. Clique em **Create Web Service**
+
+Seu site ficará em: **https://anivernasa.onrender.com**
+
+---
+
 ## 📅 Datas disponíveis
 
 A API APOD da NASA possui registros a partir de **16 de junho de 1995**.

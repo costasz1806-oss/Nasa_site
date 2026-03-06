@@ -3,8 +3,8 @@
  * Frontend - Interface simples para todas as idades
  */
 
-// Usa a mesma origem quando servido pelo backend, ou localhost:5000
-const API_URL = (window.location.port === '5000' ? '' : 'http://127.0.0.1:5000') + '/api';
+// API na mesma origem (funciona em local e em produção)
+const API_URL = '/api';
 
 // Elementos do DOM
 const inputData = document.getElementById('data-aniversario');

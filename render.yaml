@@ -1,0 +1,13 @@
+# Render - configuração para deploy gratuito
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: anivernasa
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: NASA_API_KEY
+        sync: false
+        # Adicione sua chave nas variáveis de ambiente do Render

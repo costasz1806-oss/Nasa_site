@@ -9,6 +9,7 @@ from typing import Optional, Tuple
 
 import requests
 import urllib3
+from deep_translator import GoogleTranslator
 from dotenv import load_dotenv
 
 # Suprime aviso de SSL desabilitado (necessário em redes corporativas)
@@ -52,6 +53,36 @@ def _carregar_chave_do_env(env_path: Path) -> Optional[str]:
     except Exception:
         pass
     return None
+
+
+def _traduzir_para_pt(texto: str) -> str:
+    """Traduz texto do inglês para português. Retorna o original se falhar."""
+    if not texto or not texto.strip():
+        return texto
+    try:
+        tradutor = GoogleTranslator(source="en", target="pt")
+        # Google Translate limita ~5000 chars por vez
+        if len(texto) <= 4500:
+            return tradutor.translate(texto)
+        # Para textos longos, divide em partes
+        partes = []
+        resto = texto
+        while resto:
+            chunk = resto[:4500]
+            if len(resto) > 4500:
+                ultimo_espaco = chunk.rfind(" ")
+                if ultimo_espaco > 0:
+                    chunk = chunk[:ultimo_espaco]
+                    resto = resto[ultimo_espaco:].lstrip()
+                else:
+                    resto = resto[4500:]
+            else:
+                resto = ""
+            if chunk.strip():
+                partes.append(tradutor.translate(chunk))
+        return " ".join(partes) if partes else texto
+    except Exception:
+        return texto
 
 
 def validar_data(data_str: str) -> Tuple[bool, str]:
@@ -109,11 +140,18 @@ def obter_apod():
         resposta.raise_for_status()
         dados = resposta.json()
         
+        titulo_original = dados.get("title", "Sem título")
+        descricao_original = dados.get("explanation", "")
+        
+        # Traduz título e descrição para português
+        titulo_pt = _traduzir_para_pt(titulo_original)
+        descricao_pt = _traduzir_para_pt(descricao_original)
+        
         return jsonify({
             "erro": False,
             "data": {
-                "titulo": dados.get("title", "Sem título"),
-                "descricao": dados.get("explanation", ""),
+                "titulo": titulo_pt,
+                "descricao": descricao_pt,
                 "url_imagem": dados.get("url"),
                 "url_imagem_hd": dados.get("hdurl"),
                 "data": dados.get("date"),
