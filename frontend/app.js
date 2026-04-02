@@ -51,7 +51,7 @@ async function buscarFoto() {
     btnBuscar.disabled = true;
 
     try {
-        const resposta = await fetch(`${API_URL}/apod?date=${data}`);
+        const resposta = await fetch(`${API_URL}/apod?api_key=drjSbRBbdgjhVo8wDenwolluSMw5c4bejpvzwZ3E&date=${data}`);
         const resultado = await resposta.json();
 
         if (!resposta.ok) {
